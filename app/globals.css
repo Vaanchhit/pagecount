@@ -186,6 +186,7 @@ svg.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentCol
 .shell { display: flex; gap: 24px; align-items: flex-start; padding-block: 28px; }
 .shell__main { flex: 1; min-width: 0; display: grid; gap: 40px; }
 .shell__side { width: 336px; flex: none; display: grid; gap: 22px; }
+.shell__side > * { min-width: 0; }
 @media (max-width: 1040px) {
   .shell { flex-direction: column; }
   .shell__side { width: 100%; }
