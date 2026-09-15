@@ -31,7 +31,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <nav className="nav">
         <Link className="brand" href="/library">
           <span className="logo-tile"><Icon name="book" size={16} /></span>
-          Pagecount
+          <span className="brand-text">Pagecount</span>
         </Link>
 
         <div className="navlinks">
@@ -45,7 +45,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
         <Link className="chip" href={`/u/${profile.username}`}>
           <span className="avatar">{name.slice(0, 2).toUpperCase()}</span>
-          <span className="truncate" style={{ maxWidth: 120 }}>{name}</span>
+          <span className="truncate chip-name">{name}</span>
         </Link>
       </nav>
 

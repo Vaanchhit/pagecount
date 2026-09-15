@@ -75,6 +75,7 @@ svg.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentCol
 .section { padding-block: clamp(48px, 7vw, 88px); }
 .section-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; margin-bottom: 40px; }
 .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+.grid > * { min-width: 0; }
 .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 960px) { .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -124,6 +125,7 @@ svg.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentCol
 .num-circle { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 999px; background: var(--paper); color: var(--text); border: var(--stroke-thin) solid var(--ink); font: 600 12px/1 var(--font-ui); }
 .avatar { display: inline-grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--rose); border: var(--stroke-thin) solid var(--ink); font: 700 12px/1 var(--font-ui); color: var(--text); }
 .chip { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px 0 6px; background: var(--paper); border: var(--stroke) solid var(--ink); border-radius: 999px; box-shadow: var(--shadow); font: 700 14px/1 var(--font-ui); }
+.chip-name { max-width: 120px; }
 .icon-badge { display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 50%; border: var(--stroke-thin) solid var(--ink); box-shadow: var(--shadow-sm); background: var(--tint-rose); color: var(--tint-rose-fg); }
 .tint-sky   { background: var(--tint-sky);   color: var(--tint-sky-fg); }
 .tint-mint  { background: var(--tint-mint);  color: var(--tint-mint-fg); }
@@ -196,6 +198,16 @@ svg.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentCol
 .navlinks a:hover { color: var(--text); text-decoration: none; }
 .navlinks a[data-active="true"] { color: var(--text); }
 
+@media (max-width: 640px) {
+  .nav { gap: 10px; }
+  .brand-text { display: none; }
+  .chip { padding: 0 8px 0 6px; gap: 0; }
+  .chip-name { display: none; }
+  .navlinks { gap: 14px; flex-shrink: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+  .navlinks::-webkit-scrollbar { display: none; }
+  .navlinks .has-count { margin-right: 8px; }
+}
+
 /* --- book cover: a photo, so it gets a sketch frame (§9) --- */
 .cover {
   display: block; object-fit: cover; background: var(--paper-2);
@@ -257,6 +269,7 @@ svg.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentCol
 
 /* --- feed --- */
 .feed { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.feed > * { min-width: 0; }
 .feed__note {
   margin-top: 8px; padding: 8px 12px; background: var(--chalk);
   border-left: var(--stroke) solid var(--rose-ink); border-radius: 0 6px 6px 0;
