@@ -24,12 +24,12 @@ export default function Onboarding() {
 
         <label className="label" htmlFor="u">Username</label>
         <label className="field" htmlFor="u">
-          <input id="u" value={username} onChange={(e) => setUsername(e.target.value.toLowerCase())} placeholder="yuvraj" />
+          <input id="u" value={username} onChange={(e) => setUsername(e.target.value.toLowerCase())} placeholder="bookworm23" />
         </label>
 
         <label className="label mt-md" htmlFor="d">Display name</label>
         <label className="field" htmlFor="d">
-          <input id="d" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Yuvraj" />
+          <input id="d" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Jane Doe" />
         </label>
 
         <label className="label mt-md" htmlFor="g">Daily page goal</label>
