@@ -107,14 +107,14 @@ export async function updateProfile(input: {
 
   const { error } = await supabase
     .from("profiles")
-    .update({
+    .upsert({
+      id: user.id,
       username,
       display_name: input.displayName.trim() || username,
       timezone: input.timezone,
       daily_page_goal: Math.max(1, Math.min(2000, input.dailyPageGoal)),
       onboarded: true,
-    })
-    .eq("id", user.id);
+    });
 
   if (error) {
     return { error: error.code === "23505" ? "That username is taken" : "Couldn't save that" };
