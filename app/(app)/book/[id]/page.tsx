@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Cover } from "@/components/BookCard";
 import BookActions from "@/components/BookActions";
+import LogHistory from "@/components/LogHistory";
 import type { BookProgress } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -98,22 +99,7 @@ export default async function BookPage({ params }: { params: Promise<{ id: strin
 
       <section>
         <h2 className="page-title mb-md" style={{ fontSize: 16 }}>History</h2>
-        {logs && logs.length > 0 ? (
-          <div className="card card--flush" style={{ padding: "4px 20px" }}>
-            <ul className="hist">
-              {logs.map((l) => (
-                <li key={l.id}>
-                  <span className="num meta" style={{ width: 92 }}>{l.local_date}</span>
-                  <span className="num" style={{ width: 56, fontWeight: 700 }}>+{l.pages_read}</span>
-                  {l.end_page && <span className="num meta" style={{ width: 62 }}>p.{l.end_page}</span>}
-                  {l.note && <span className="meta truncate">{l.note}</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <p className="meta">No entries yet.</p>
-        )}
+        <LogHistory userBookId={id} logs={logs ?? []} canDelete={isMine} />
       </section>
     </div>
   );

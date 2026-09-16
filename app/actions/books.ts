@@ -148,6 +148,31 @@ export async function reopenBook(userBookId: string) {
   return { ok: true };
 }
 
+/**
+ * Delete a single log entry. Unlike a shelf entry this is a real delete, not
+ * an archive — the user is explicitly correcting a mistake (wrong page,
+ * duplicate entry). Streaks, badges, and pace all recompute live from
+ * whatever's left in reading_logs, so there's nothing else to update.
+ */
+export async function deleteLog(logId: string, userBookId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not signed in" };
+
+  const { error } = await supabase
+    .from("reading_logs")
+    .delete()
+    .eq("id", logId)
+    .eq("user_id", user.id);
+
+  if (error) return { error: "Couldn't delete that entry" };
+
+  revalidatePath(`/book/${userBookId}`);
+  revalidatePath("/library");
+  revalidatePath("/feed");
+  return { ok: true };
+}
+
 /** Archive, never delete — the logs underneath are streak history. */
 export async function archiveBook(userBookId: string) {
   const supabase = await createClient();

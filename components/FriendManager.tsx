@@ -12,7 +12,7 @@ const initials = (s: string) => s.trim().slice(0, 2).toUpperCase();
 
 export default function FriendManager({
   mode = "search", requests = [],
-}: { mode?: "search" | "requests" | "list"; requests?: Person[] }) {
+}: { mode?: "search" | "requests" | "list" | "outgoing"; requests?: Person[] }) {
   const [q, setQ] = useState("");
   const [found, setFound] = useState<Found[]>([]);
   const [sent, setSent] = useState<Set<string>>(new Set());
@@ -51,7 +51,7 @@ export default function FriendManager({
                   className="btn btn--quiet" disabled={pending}
                   onClick={() => start(async () => { await removeFriendship(r.id); setDone((p) => new Set(p).add(r.id)); })}
                 >
-                  Remove
+                  {mode === "outgoing" ? "Cancel" : "Remove"}
                 </button>
               )}
             </div>

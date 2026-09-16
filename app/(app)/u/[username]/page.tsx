@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import StreakGrid from "@/components/StreakGrid";
 import BadgeShelf from "@/components/BadgeShelf";
 import { Cover } from "@/components/BookCard";
+import DeleteAccountButton from "@/components/DeleteAccountButton";
+import { signOut } from "@/app/actions/account";
 import type { ActivityDay, Badge, ShelfBook, Stats, Streak } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -49,10 +51,15 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
         <span className="avatar" style={{ width: 48, height: 48, fontSize: 16 }}>
           {name.slice(0, 2).toUpperCase()}
         </span>
-        <div>
+        <div className="grow">
           <h1 className="page-title">{name}</h1>
           <p className="meta">@{profile.username}</p>
         </div>
+        {isMe && (
+          <form action={signOut}>
+            <button type="submit" className="btn btn--quiet">Log out</button>
+          </form>
+        )}
       </header>
 
       {books.length === 0 && !isMe ? (
@@ -92,6 +99,13 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             <h2 className="page-title mb-md" style={{ fontSize: 16 }}>Badges</h2>
             <BadgeShelf catalogue={(catalogue ?? []) as Badge[]} earned={earned ?? []} />
           </section>
+
+          {isMe && (
+            <section>
+              <h2 className="page-title mb-md" style={{ fontSize: 16 }}>Account</h2>
+              <DeleteAccountButton />
+            </section>
+          )}
         </>
       )}
     </div>

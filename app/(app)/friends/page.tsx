@@ -62,11 +62,7 @@ export default async function FriendsPage() {
       {outgoing.length > 0 && (
         <section>
           <h2 className="page-title mb-md" style={{ fontSize: 16 }}>Waiting to hear back</h2>
-          <ul className="stack-sm" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-            {outgoing.map((r) => (
-              <li key={r.id} className="meta">{other(r)?.display_name || other(r)?.username}</li>
-            ))}
-          </ul>
+          <FriendManager mode="outgoing" requests={outgoing.map(shape)} />
         </section>
       )}
     </div>
