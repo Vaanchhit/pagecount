@@ -21,6 +21,30 @@ export function Cover({
   );
 }
 
+/** Compact donut, same SVG technique as the streak ring, sized down for a list row. */
+function ProgressRing({ percent, size = 40 }: { percent: number; size?: number }) {
+  const r = size / 2 - 3.5;
+  const C = 2 * Math.PI * r;
+  const pct = Math.min(1, Math.max(0, percent / 100));
+  const met = pct >= 1;
+
+  return (
+    <div className="ring" style={{ width: size, height: size }}>
+      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} style={{ transform: "rotate(-90deg)" }} aria-hidden="true">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="var(--paper)" stroke="var(--ink)" strokeWidth="1.5" />
+        <circle
+          cx={size / 2} cy={size / 2} r={r} fill="none"
+          stroke={met ? "var(--rose-ink)" : "var(--rose)"}
+          strokeWidth="5" strokeLinecap="butt"
+          strokeDasharray={C} strokeDashoffset={C * (1 - pct)}
+        />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--ink)" strokeWidth="1.5" />
+      </svg>
+      <span className="ring__value" style={{ fontSize: size * 0.27 }}>{Math.round(percent)}%</span>
+    </div>
+  );
+}
+
 export default function BookCard({
   book, progress,
 }: {
@@ -45,19 +69,17 @@ export default function BookCard({
             </Link>
 
             {progress && b.total_pages ? (
-              <div style={{ marginTop: "auto", paddingTop: 12 }}>
-                <span className="progress">
-                  <span style={{ width: `${progress.percent ?? 0}%` }} />
-                </span>
-                <div className="between mt-sm">
-                  <span className="meta num">Page {progress.current_page ?? 0} of {b.total_pages}</span>
+              <div className="row mt-sm" style={{ gap: 10, flexWrap: "nowrap" }}>
+                <ProgressRing percent={progress.percent ?? 0} />
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div className="meta num">Page {progress.current_page ?? 0} of {b.total_pages}</div>
                   {progress.days_remaining !== null && progress.days_remaining > 0 && (
-                    <span className="meta num">~{progress.days_remaining}d left</span>
+                    <div className="meta num">~{progress.days_remaining}d left</div>
                   )}
                 </div>
               </div>
             ) : (
-              <p className="meta" style={{ marginTop: "auto", paddingTop: 12 }}>Not started</p>
+              <p className="meta mt-sm">Not started</p>
             )}
           </div>
 
